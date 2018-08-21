@@ -1,0 +1,81 @@
+<style>
+  .box {
+       float: left;
+       width: 45%;
+       margin-right: 1%;
+       box-sizing: border-box;
+  }
+  .holeBox {
+       float: left;
+       width: 99%;
+       margin-right: 1%;
+       padding: 20px;
+       box-sizing: border-box;
+  }
+</style>
+
+
+<section>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Skc Anmog</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="dashboard">Newsfeed</a></li>
+        <li class="active"><a href="mains">Data Base</a></li>
+        <li><a href="mains/show">Search</a></li>
+        <li><a href="#">Contact</a></li>
+        <li> <%= link_to "Log Out", destroy_skc_session_path, method: :delete %></li>
+      </ul>
+    </div>
+  </nav>
+</section>
+
+<header class="holeBox">
+    <h1 class="h1">Data Base</h1>
+</header>
+<section class="holeBox">
+  <section = class="box">
+    <%= pie_chart Main.group(:status).count , titel: "Value" %>
+    <h4 class="h4" align="center">Status of procedure</h4>
+  </section>
+  <section = class="box">
+    <%= pie_chart Main.where("status = 'finished'", params[:status]).group(:field_of_application).count %>
+      <%= Main.where("status = 'finished'", params[:status]).group(:field_of_application).count %>
+    <h4 class="h4" align="center">Fields of Application of finished procedure</h4>
+  </section>
+</section>
+<section class="holeBox">
+     <h1 class="holeBox">Datatable:</h1>
+    <table class="table" border=1>
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Drug Name</th>
+                <th>Brand Name</th>
+                <th>Manufacturer</th>
+                <th>Status</th>
+                <th>Indication</th>
+                <th>Field of Application</th>
+                <th>Orphan Drug</th>
+                <th>Subgroup(s)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @mains.each do |main| %>
+                <tr>
+                    <td><%= main.number %></td>
+                    <td><%= main.drug_name %></td>
+                    <td><%= main.brand_name %></td>
+                    <td><%= main.manufacturer %></td>
+                    <td><%= main.status %></td>
+                    <td><%= main.indication %></td>
+                    <td><%= main.field_of_application %></td>
+                    <td><%= main.orphan_drug %></td>
+                    <td><%= main.subgroups %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</section>
